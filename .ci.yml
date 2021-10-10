@@ -17,6 +17,8 @@ steps:
        from_secret: DEVICE_DEFCONFIG
      ANYKERNEL:
        from_secret: ANYKERNEL
+     AnyKernel:
+       from_secret: AnyKernel
      TG_TOKEN:
        from_secret: TG_TOKEN
      TG_CHAT_ID:

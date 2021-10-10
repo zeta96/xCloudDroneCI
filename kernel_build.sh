@@ -17,7 +17,7 @@
 
 echo "Downloading few Dependecies . . ."
 # Kernel Sources
-git clone --depth=1 $KERNEL_SOURCE $KERNEL_BRANCH $DEVICE_CODENAME
+git clone --depth=1 $KERNEL_SOURCE $KERNEL_BRANCH
 git clone --depth=1 https://github.com/xyz-prjkt/xRageTC_build xRageTC # xRageTC set as Clang Default
 
 # Main Declaration

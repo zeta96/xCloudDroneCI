@@ -24,6 +24,7 @@ git clone --depth=1 https://github.com/mose-to/general-clang -b main general # x
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_DEFCONFIG=$DEVICE_DEFCONFIG # IMPORTANT ! Declare your kernel source defconfig file here.
 CLANG_ROOTDIR=$(pwd)/general # IMPORTANT! Put your clang directory here.
+ANYKERNEl_ROOTDIR=$(pwd)/AnyKernel #IMPORTANT! Put your anykernel directory here. 
 export KBUILD_BUILD_USER=$BUILD_USER # Change with your own name or else.
 export KBUILD_BUILD_HOST=$BUILD_HOST # Change with your own hostname.
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
@@ -62,7 +63,7 @@ tg_post_msg() {
 }
 
 # Post Main Information
-tg_post_msg "<b>Cooking Kernel</b><code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>"
+tg_post_msg "<b>Cooking Kernel</b>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>"
 
 # Compile
 compile(){
@@ -86,12 +87,12 @@ make -j$(nproc) ARCH=arm64 O=out \
    fi
 
   git clone --depth=1 $ANYKERNEL AnyKernel
-	cp $IMAGE AnyKernel
+	cp $IMAGE $ANYKERNEl_ROOTDIR
 }
 
 # Push kernel to channel
 function push() {
-    cd AnyKernel
+    cd $ANYKERNEl_ROOTDIR
     ZIP=$(echo *.zip)
     curl -F document=@$ZIP "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
         -F chat_id="$TG_CHAT_ID" \
@@ -111,7 +112,7 @@ function finerr() {
 
 # Zipping
 function zipping() {
-    cd AnyKernel || exit 1
+    cd $ANYKERNEl_ROOTDIR || exit 1
     zip -r9 $KERNEL_NAME-$DEVICE_CODENAME-${DATE}.zip *
     cd ..
 }

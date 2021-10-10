@@ -10,6 +10,7 @@
 # DEVICE_CODENAME | Your device codename
 # DEVICE_DEFCONFIG | Your device defconfig eg. lavender_defconfig
 # ANYKERNEL | Your Anykernel link repository
+# AnyKernel | Your Anykernel branch
 # TG_TOKEN | Your telegram bot token
 # TG_CHAT_ID | Your telegram private ci chat id
 # BUILD_USER | Your username
@@ -85,13 +86,13 @@ make -j$(nproc) ARCH=arm64 O=out \
 	exit 1
    fi
 
-  git clone --depth=1 $ANYKERNEL AnyKernel
+  git clone --depth=1 $ANYKERNEL $AnyKernel
 	cp $IMAGE AnyKernel
 }
 
 # Push kernel to channel
 function push() {
-    cd AnyKernel
+    cd $AnyKernel
     ZIP=$(echo *.zip)
     curl -F document=@$ZIP "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
         -F chat_id="$TG_CHAT_ID" \
@@ -111,7 +112,7 @@ function finerr() {
 
 # Zipping
 function zipping() {
-    cd AnyKernel || exit 1
+    cd $AnyKernel || exit 1
     zip -r9 $KERNEL_NAME-$DEVICE_CODENAME-${DATE}.zip *
     cd ..
 }

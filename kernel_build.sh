@@ -24,7 +24,7 @@ git clone --depth=1 https://github.com/mose-to/general-clang -b main general # x
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_DEFCONFIG=$DEVICE_DEFCONFIG # IMPORTANT ! Declare your kernel source defconfig file here.
 CLANG_ROOTDIR=$(pwd)/general # IMPORTANT! Put your clang directory here.
-ANYKERNEL_ROOTDIR=$(pwd)/anykernel #IMPORTANT! Put your anykernel directory here. 
+ANYKERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME/anykernel #IMPORTANT! Put your anykernel directory here. 
 export KBUILD_BUILD_USER=$BUILD_USER # Change with your own name or else.
 export KBUILD_BUILD_HOST=$BUILD_HOST # Change with your own hostname.
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
@@ -88,7 +88,9 @@ make -j$(nproc) ARCH=arm64 O=out \
 
   git clone --depth=1 $ANYKERNEL anykernel
         ls -l $(pwd)
-        ls -l $(pwd)/anykernel
+
+        echo "anykernel rootdir" 
+        ls -l $(pwd)/$DEVICE_CODENAME/anykernel
 	cp $IMAGE $ANYKERNEL_ROOTDIR
 }
 

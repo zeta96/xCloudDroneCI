@@ -74,18 +74,18 @@ tg_post_msg "<b>Cooking Kernel:</b><code>Compilation has started</code>"
 cd ${KERNEL_ROOTDIR}
 make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
 make -j$(nproc) ARCH=arm64 O=out \
-     CROSS_COMPILE=${GCC64_ROOTDIR}/bin/aarch64-elf- \
-     CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
-     AR=${GCC64_ROOTDIR}/bin/aarch64-elf-ar \
-     AS=${GCC64_ROOTDIR}/bin/aarch64-elf-as \
-     NM=${GCC64_ROOTDIR}/bin/aarch64-elf-nm \
-     CC=${GCC64_ROOTDIR}/bin/aarch64-elf-gcc \
-     LD=${GCC64_ROOTDIR}/bin/aarch64-elf-ld.lld \
-     OBJCOPY=${GCC64_ROOTDIR}/bin/aarch64-elf-objcopy \
-     OBJDUMP=${GCC64_ROOTDIR}/bin/aarch64-elf-objdump \
-     OBJSIZE=${GCC64_ROOTDIR}/bin/aarch64-elf-size \
-     READELF=${GCC64_ROOTDIR}/bin/aarch64-elf-readelf \
-     STRIP=${GCC64_ROOTDIR}/bin/aarch64-elf-strip
+    CROSS_COMPILE=${GCC64_ROOTDIR}/bin/aarch64-elf- \
+    CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
+    AR=${GCC64_ROOTDIR}/bin/aarch64-elf-ar \
+    AS=${GCC64_ROOTDIR}/bin/aarch64-elf-as \
+    NM=${GCC64_ROOTDIR}/bin/aarch64-elf-nm \
+    CC=${GCC64_ROOTDIR}/bin/aarch64-elf-gcc \
+    LD=${GCC64_ROOTDIR}/bin/aarch64-elf-ld.lld \
+    OBJCOPY=${GCC64_ROOTDIR}/bin/aarch64-elf-objcopy \
+    OBJDUMP=${GCC64_ROOTDIR}/bin/aarch64-elf-objdump \
+    OBJSIZE=${GCC64_ROOTDIR}/bin/aarch64-elf-size \
+    READELF=${GCC64_ROOTDIR}/bin/aarch64-elf-readelf \
+    STRIP=${GCC64_ROOTDIR}/bin/aarch64-elf-strip
 
    if ! [ -a "$IMAGE" ]; then
 	finerr

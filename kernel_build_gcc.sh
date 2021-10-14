@@ -29,13 +29,13 @@ GCC32_ROOTDIR=$(pwd)/eva32 # IMPORTANT! Put your gcc arm directory here.
 ANYKERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME/AnyKernel #IMPORTANT! Put your anykernel directory here. 
 export KBUILD_BUILD_USER=$BUILD_USER # Change with your own name or else.
 export KBUILD_BUILD_HOST=$BUILD_HOST # Change with your own hostname.
-CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-LLD_VER="$("$CLANG_ROOTDIR"/bin/ld.lld --version | head -n 1)"
-export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
+GCC_VER="$("$GCC64_ROOTDIR"/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+LLD_VER="$("$GCC64_ROOTDIR"/bin/aarch64-elf-ld.lld --version | head -n 1)"
+export KBUILD_COMPILER_STRING="$GCC_VER with $LLD_VER"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH="${PATH}:${GCC64_ROOTDIR}/bin/:{GCC32_ROOTDIR}/bin"
+PATH="${PATH}:${GCC64_ROOTDIR}/bin/:{GCC32_ROOTDIR}/bin/"
 
 # Checking environtment
 # Warning !! Dont Change anything there without known reason.
@@ -48,7 +48,8 @@ echo BUILDER NAME = ${KBUILD_BUILD_USER}
 echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
 echo TOOLCHAIN_VERSION = ${KBUILD_COMPILER_STRING}
-echo CLANG_ROOTDIR = ${CLANG_ROOTDIR}
+echo GCC64_ROOTDIR = ${GCC64_ROOTDIR}
+echo GCC32_ROOTDIR = ${GCC32_ROOTDIR}
 echo KERNEL_ROOTDIR = ${KERNEL_ROOTDIR}
 echo ================================================
 }
@@ -65,7 +66,7 @@ tg_post_msg() {
 }
 
 # Post Main Information
-tg_post_msg "<b>Cooking Kernel</b>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>"
+tg_post_msg "<b>Cooking Kernel</b>%0AGCC Version : <code>${KBUILD_COMPILER_STRING}</code>"
 
 # Compile
 compile(){
@@ -73,27 +74,18 @@ tg_post_msg "<b>Cooking Kernel:</b><code>Compilation has started</code>"
 cd ${KERNEL_ROOTDIR}
 make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
 make -j$(nproc) ARCH=arm64 O=out \
-        CROSS_COMPILE=$HOME/gcc64/bin/aarch64-elf- \
-        CROSS_COMPILE_ARM32=$HOME/gcc32/bin/arm-eabi- \
-	AR=aarch64-elf-ar \
-        AS=aarch64-elf-as \
-	NM=aarch64-elf-nm \
-        CC=aarch64-elf-gcc \
-	LD=aarch64-elf-ld.lld \
-	OBJCOPY=aarch64-elf-objcopy \
-	OBJDUMP=aarch64-elf-objdump \
-	OBJSIZE=aarch64-elf-size \
-	READELF=aarch64-elf-readelf \
-	STRIP=aarch64-elf-strip \
-    CC=${CLANG_ROOTDIR}/bin/clang \#edit this till
-    AR=${CLANG_ROOTDIR}/bin/llvm-ar \
-    NM=${CLANG_ROOTDIR}/bin/llvm-nm \
-    OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
-    OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
-    STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
-    LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
-    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-#edit this too
+     CROSS_COMPILE=${GCC64_ROOTDIR}/bin/aarch64-elf- \
+     CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
+     AR=${GCC64_ROOTDIR}/bin/aarch64-elf-ar \
+     AS=${GCC64_ROOTDIR}/bin/aarch64-elf-as \
+     NM=${GCC64_ROOTDIR}/bin/aarch64-elf-nm \
+     CC=${GCC64_ROOTDIR}/bin/aarch64-elf-gcc \
+     LD=${GCC64_ROOTDIR}/bin/aarch64-elf-ld.lld \
+     OBJCOPY=${GCC64_ROOTDIR}/bin/aarch64-elf-objcopy \
+     OBJDUMP=${GCC64_ROOTDIR}/bin/aarch64-elf-objdump \
+     OBJSIZE=${GCC64_ROOTDIR}/bin/aarch64-elf-size \
+     READELF=${GCC64_ROOTDIR}/bin/aarch64-elf-readelf \
+     STRIP=${GCC64_ROOTDIR}/bin/aarch64-elf-strip
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
@@ -110,7 +102,7 @@ function push() {
     ZIP=$(echo *.zip)
     curl -F document=@$ZIP "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
         -F chat_id="$TG_CHAT_ID" \
-        -F "disable_web_page_preview=true" \
+        -F "disable_web_page_preview=ue" \
         -F "parse_mode=html" \
         -F caption="Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>${KBUILD_COMPILER_STRING}</b>"
 }

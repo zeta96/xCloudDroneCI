@@ -3,7 +3,7 @@ name : xKernel Compiler
 version: rev1.5_template
 steps:
  - name: xKernel Compilation
-   image: panchajanya1999/archlinux:latest
+   image: xyzuan/xdocker:latest
    environment:
      KERNEL_NAME:
        from_secret: KERNEL_NAME

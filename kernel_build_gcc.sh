@@ -79,9 +79,11 @@ make -j$(nproc) ARCH=arm64 O=out \
     AR=${GCC64_ROOTDIR}/bin/aarch64-elf-ar \
     AS=${GCC64_ROOTDIR}/bin/aarch64-elf-as \
     NM=${GCC64_ROOTDIR}/bin/aarch64-elf-nm \
+    LLVMNM=${GCC64_ROOTDIR}/bin/llvm-nm \
     CC=${GCC64_ROOTDIR}/bin/aarch64-elf-gcc \
     LD=${GCC64_ROOTDIR}/bin/aarch64-elf-ld.lld \
     OBJCOPY=${GCC64_ROOTDIR}/bin/aarch64-elf-objcopy \
+    LLVMOBJCOPY=${GCC64_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC64_ROOTDIR}/bin/aarch64-elf-objdump \
     OBJSIZE=${GCC64_ROOTDIR}/bin/aarch64-elf-size \
     READELF=${GCC64_ROOTDIR}/bin/aarch64-elf-readelf \

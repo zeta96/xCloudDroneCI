@@ -9,6 +9,7 @@
 # KERNEL_BRANCH  | Your needed kernel branch if needed with -b. eg -b eleven_eas
 # DEVICE_CODENAME | Your device codename
 # DEVICE_DEFCONFIG | Your device defconfig eg. lavender_defconfig
+# DEVICE_CONFIG | Your device config for eg. treble or nontreble
 # ANYKERNEL | Your Anykernel link repository if needed with -b. eg -b anykernel
 # TG_TOKEN | Your telegram bot token
 # TG_CHAT_ID | Your telegram private ci chat id
@@ -47,6 +48,7 @@ echo ================================================
 echo BUILDER NAME = ${KBUILD_BUILD_USER}
 echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
+echo DEVICE_CONFIG = ${DEVICE_CONFIG}
 echo TOOLCHAIN_VERSION = ${COMPILER_STRING}
 echo GCC64_ROOTDIR = ${GCC64_ROOTDIR}
 echo GCC32_ROOTDIR = ${GCC32_ROOTDIR}
@@ -121,7 +123,7 @@ function finerr() {
 # Zipping
 function zipping() {
     cd $ANYKERNEL_ROOTDIR || exit 1
-    zip -r9 $KERNEL_NAME-$DEVICE_CODENAME-${DATE}.zip *
+    zip -r9 $KERNEL_NAME-$DEVICE_CODENAME-$DEVICE_CONFIG-${DATE}.zip *
     cd ..
 }
 check

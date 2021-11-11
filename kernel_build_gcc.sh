@@ -35,7 +35,7 @@ COMPILER_STRING="$GCC_VER with $LLD_VER"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH=$GCC64_ROOTDIR/bin/:$GCC32_ROOTDIR/bin/:/usr/bin:$PATH
+PATH="${GCC64_ROOTDIR}/bin/:${GCC32_ROOTDIR}/bin/:/usr/bin:${PATH}"
 
 # Checking environtment
 # Warning !! Dont Change anything there without known reason.

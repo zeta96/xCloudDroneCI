@@ -25,6 +25,7 @@ git clone --depth=1 https://github.com/mvaisakh/gcc-arm -b gcc-master eva32
 # Main Declaration
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_DEFCONFIG=$DEVICE_DEFCONFIG # IMPORTANT ! Declare your kernel source defconfig file here.
+DEVICE_CONFIG=$DEVICE_CONFIG # IMPORTANT ! Declare your kernel source config for here.
 GCC64_ROOTDIR=$(pwd)/eva64 # IMPORTANT! Put your gcc arm64 directory here.
 GCC32_ROOTDIR=$(pwd)/eva32 # IMPORTANT! Put your gcc arm directory here. 
 ANYKERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME/AnyKernel #IMPORTANT! Put your anykernel directory here. 

@@ -9,6 +9,7 @@
 # KERNEL_BRANCH  | Your needed kernel branch if needed with -b. eg -b eleven_eas
 # DEVICE_CODENAME | Your device codename
 # DEVICE_DEFCONFIG | Your device defconfig eg. lavender_defconfig
+# DEVICE_CONFIG | Your device config for eg. treble or nontreble
 # ANYKERNEL | Your Anykernel link repository if needed with -b. eg -b anykernel
 # TG_TOKEN | Your telegram bot token
 # TG_CHAT_ID | Your telegram private ci chat id
@@ -18,7 +19,7 @@
 echo "Downloading few Dependecies . . ."
 # Kernel Sources
 git clone --depth=1 $KERNEL_SOURCE $KERNEL_BRANCH $DEVICE_CODENAME
-git clone --depth=1 https://github.com/vijaymalav564/vortex-clang -b master clang # xRageTC set as Clang Default
+git clone --depth=1 https://github.com/vijaymalav564/vortex-clang -b master clang # set as Clang Default
 
 # Main Declaration
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.
@@ -45,6 +46,7 @@ echo ================================================
 echo BUILDER NAME = ${KBUILD_BUILD_USER}
 echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
+echo DEVICE_CONFIG = ${DEVICE_CONFIG}
 echo TOOLCHAIN_VERSION = ${COMPILER_STRING}
 echo CLANG_ROOTDIR = ${CLANG_ROOTDIR}
 echo KERNEL_ROOTDIR = ${KERNEL_ROOTDIR}
@@ -113,7 +115,7 @@ function finerr() {
 # Zipping
 function zipping() {
     cd $ANYKERNEL_ROOTDIR || exit 1
-    zip -r9 $KERNEL_NAME-$DEVICE_CODENAME-${DATE}.zip *
+    zip -r9 $KERNEL_NAME-$DEVICE_CODENAME-$DEVICE_CONFIG-${DATE}.zip *
     cd ..
 }
 check

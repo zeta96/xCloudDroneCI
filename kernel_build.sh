@@ -24,6 +24,7 @@ git clone --depth=1 https://github.com/vijaymalav564/vortex-clang -b master clan
 # Main Declaration
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_DEFCONFIG=$DEVICE_DEFCONFIG # IMPORTANT ! Declare your kernel source defconfig file here.
+DEVICE_CONFIG=$DEVICE_CONFIG # IMPORTANT ! Declare your kernel source config for here.
 CLANG_ROOTDIR=$(pwd)/clang # IMPORTANT! Put your clang directory here.
 ANYKERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME/AnyKernel #IMPORTANT! Put your anykernel directory here. 
 export KBUILD_BUILD_USER=$BUILD_USER # Change with your own name or else.

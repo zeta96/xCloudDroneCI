@@ -101,7 +101,7 @@ function push() {
         -F chat_id="$TG_CHAT_ID" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> ). | <b>$DEVICE_CONFIG</b> build"
+        -F caption="Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>$DEVICE_CONFIG</b> build | <b>${COMPILER_STRING}</b>"
 }
 # Fin Error
 function finerr() {

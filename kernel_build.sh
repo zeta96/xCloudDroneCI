@@ -19,7 +19,7 @@
 echo "Downloading few Dependecies . . ."
 # Kernel Sources
 git clone --depth=1 $KERNEL_SOURCE $KERNEL_BRANCH $DEVICE_CODENAME
-git clone --depth=1 https://github.com/vijaymalav564/vortex-clang -b master clang # set as Clang Default
+git clone --depth=1 https://github.com/xyz-prjkt/xRageTC-clang -b main clang # set as Clang Default
 
 # Main Declaration
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.

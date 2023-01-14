@@ -19,8 +19,8 @@
 echo "Downloading few Dependecies . . ."
 # Kernel Sources
 git clone --depth=1 $KERNEL_SOURCE $KERNEL_BRANCH $DEVICE_CODENAME
-git clone --depth=1 https://github.com/Dhruvgera/EvaGCC-arm64 -b master eva64
-git clone --depth=1 https://github.com/Dhruvgera/EvaGCC-arm -b master eva32
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 -b gcc-master eva64
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm -b gcc-master eva32
 
 # Main Declaration
 KERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME # IMPORTANT ! Fill with your kernel source root directory.
@@ -32,8 +32,8 @@ ANYKERNEL_ROOTDIR=$(pwd)/$DEVICE_CODENAME/AnyKernel #IMPORTANT! Put your anykern
 export KBUILD_BUILD_USER=$BUILD_USER # Change with your own name or else.
 export KBUILD_BUILD_HOST=$BUILD_HOST # Change with your own hostname.
 GCC_VER="$("$GCC64_ROOTDIR"/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-LD_VER="$("$GCC64_ROOTDIR"/bin/aarch64-elf-ld --version | head -n 1)"
-COMPILER_STRING="$GCC_VER with $LD_VER"
+LLD_VER="$("$GCC64_ROOTDIR"/bin/aarch64-elf-ld.lld --version | head -n 1)"
+COMPILER_STRING="$GCC_VER with $LLD_VER"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
@@ -90,7 +90,7 @@ make -j$(nproc) ARCH=arm64 O=out \
     OBJSIZE=${GCC64_ROOTDIR}/bin/aarch64-elf-size \
     READELF=${GCC64_ROOTDIR}/bin/aarch64-elf-readelf \
     STRIP=${GCC64_ROOTDIR}/bin/aarch64-elf-strip \
-#    LD=${GCC64_ROOTDIR}/bin/aarch64-elf-ld.lld
+    LD=${GCC64_ROOTDIR}/bin/aarch64-elf-ld.lld
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
